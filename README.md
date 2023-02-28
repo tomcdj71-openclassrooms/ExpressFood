@@ -28,5 +28,25 @@ Projet 4 UML Express Food
 > ### Class Diagram
 ---
 ![diagram](./svg/classes.svg)
+---
+## Sequences Diagrams
+---
+> ### placeOrder Sequence Diagram
+---
+![diagram](./svg/sequences/placeOrder.svg)
+
+---
+> ### processOrder Sequence Diagram
+---
+![diagram](./svg/sequences/processOrder.svg)
+---
+> ## updateStock Sequence Diagram
+---
+![diagram](./svg/sequences/updateStock.svg)
+---
+> ### Full Sequence Diagram
+---
+To see the all the sequences in the same diagram, please click [here](./svg/sequences/full-sequences.svg)
+
 
 
