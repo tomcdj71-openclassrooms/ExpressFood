@@ -41,7 +41,7 @@ Projet 4 UML Express Food
 ---
 > ### Class Diagram
 ---
-![diagram]()
+![diagram](./svg/classes.svg)
 ---
 ## Sequences Diagrams
 ---
