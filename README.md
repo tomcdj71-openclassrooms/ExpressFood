@@ -24,29 +24,43 @@ Projet 4 UML Express Food
  - Diagrammes de séquences (création d’une commande, ajout d’un plat du jour, livraison d’une commande).
 
 
+# Diagrams
+## Use Case Diagrams
+---
+> ### Use Case 1 - Order Creation
+---
+![use_case_1_order_creation](./png/usecases/Use_Case_1_Order_Creation.png)
+---
+> ### Use Case 2 - Dish Management
+---
+![use_case_2_dish_management](./png/usecases/Use_Case_2_Dish_Management.png)
+---
+> ### Use Case 3 - Order Delivery
+---
+![use_case_3_order_delivery_diagram](./png/usecases/Use_Case_3_Order_Delivery.png)
 ---
 > ### Class Diagram
 ---
-![diagram](./svg/classes.svg)
+![diagram]()
 ---
 ## Sequences Diagrams
 ---
 > ### placeOrder Sequence Diagram
 ---
-![diagram](./svg/sequences/placeOrder.svg)
+![diagram]()
 
 ---
 > ### processOrder Sequence Diagram
 ---
-![diagram](./svg/sequences/processOrder.svg)
+![diagram]()
 ---
 > ## updateStock Sequence Diagram
 ---
-![diagram](./svg/sequences/updateStock.svg)
+![diagram]()
 ---
 > ### Full Sequence Diagram
 ---
-To see the all the sequences in the same diagram, please click [here](./svg/sequences/full-sequences.svg)
+To see the all the sequences in the same diagram, please click [here]()
 
 
 
