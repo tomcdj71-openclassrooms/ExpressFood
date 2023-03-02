@@ -60,7 +60,4 @@ Projet 4 UML Express Food
 ---
 > ### Full Sequence Diagram
 ---
-To see the all the sequences in the same diagram, please click [here]()
-
-
-
+To see the all the sequences in the same diagram, please click [here](./png/sequences/full-sequences.png)
