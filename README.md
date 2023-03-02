@@ -47,7 +47,7 @@ Projet 4 UML Express Food
 ---
 > ### placeOrder Sequence Diagram
 ---
-![diagram]()
+![diagram](./svg/sequences/orderCreation.svg)
 
 ---
 > ### processOrder Sequence Diagram
