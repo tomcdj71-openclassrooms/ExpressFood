@@ -54,9 +54,9 @@ Projet 4 UML Express Food
 ---
 ![diagram](./svg/sequences/orderDelivery.svg)
 ---
-> ## updateStock Sequence Diagram
+> ## dishManagement Sequence Diagram
 ---
-![diagram]()
+![diagram](./svg/sequences/dishManagement.svg)
 ---
 > ### Full Sequence Diagram
 ---
