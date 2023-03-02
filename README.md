@@ -45,14 +45,14 @@ Projet 4 UML Express Food
 ---
 ## Sequences Diagrams
 ---
-> ### placeOrder Sequence Diagram
+> ### orderCreation Sequence Diagram
 ---
 ![diagram](./svg/sequences/orderCreation.svg)
 
 ---
-> ### processOrder Sequence Diagram
+> ### orderDelivery Sequence Diagram
 ---
-![diagram]()
+![diagram](./svg/sequences/orderDelivery.svg)
 ---
 > ## updateStock Sequence Diagram
 ---
