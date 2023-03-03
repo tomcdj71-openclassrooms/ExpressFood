@@ -1,4 +1,2 @@
 .mermaid-diagrams
-*.db
-*.sql
 *.db-journal
