@@ -58,6 +58,10 @@ Projet 4 UML Express Food
 ---
 ![diagram](./svg/sequences/dishManagement.svg)
 ---
+> ## stockManagement Sequence Diagram
+---
+![diagram](./svg/sequences/stockManagement.svg)
+---
 > ### Full Sequence Diagram
 ---
 To see the all the sequences in the same diagram, please click [here](./png/sequences/full-sequences.png)
