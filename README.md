@@ -47,20 +47,20 @@ Projet 4 UML Express Food
 ---
 > ### orderCreation Sequence Diagram
 ---
-![diagram](./svg/sequences/orderCreation.svg)
+![diagram](./svg/sequences/Seq_1_Order_Creation.svg)
 
----
-> ### orderDelivery Sequence Diagram
----
-![diagram](./svg/sequences/orderDelivery.svg)
 ---
 > ## dishManagement Sequence Diagram
 ---
-![diagram](./svg/sequences/dishManagement.svg)
+![diagram](./svg/sequences/Seq_2_Dish_Management.svg)
+---
+> ### orderDelivery Sequence Diagram
+---
+![diagram](./svg/sequences/Seq_3_Order_Delivery.svg)
 ---
 > ## stockManagement Sequence Diagram
 ---
-![diagram](./svg/sequences/stockManagement.svg)
+![diagram](./svg/sequences/Seq_4_Stock_Management.svg)
 ---
 > ### Full Sequence Diagram
 ---
