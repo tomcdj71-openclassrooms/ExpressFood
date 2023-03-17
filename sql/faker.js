@@ -1,7 +1,6 @@
 const { faker } = require('@faker-js/faker/locale/fr');
-const fs = require('fs');
-// require sqlite3
 const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
 function createAddress() {
     const addressNumber = faker.address.buildingNumber();
@@ -182,7 +181,7 @@ for (var i = 0; i < 35; i++) {
     orders.push(order);
 }
 
-// Create 55 order items
+// Create 55 order item
 for (var i = 0; i < 55; i++) {
     const orderItem = createOrderItems();
     orderItems.push(orderItem);
@@ -220,7 +219,6 @@ tableData.forEach(({ data, table }) => {
     });
 });
 
-// Build the INSERT INTO statement for each table
 const insertStatements = Object.entries(sqlStatements).map(([table, values]) => {
     const columns = values.columns.join(', ');
     const rows = values.values.join(',\n    ');
@@ -229,25 +227,20 @@ const insertStatements = Object.entries(sqlStatements).map(([table, values]) => 
 
 const db = new sqlite3.Database('database.db');
 const newData = `PRAGMA foreign_keys = ON;\n${insertStatements.join('\n')}`;
-// Read the modified db_dump.sql file
 fs.readFile('db_dump.sql', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
         return;
     }
 
-    // check if PRAGMA foreign_keys = ON; exists
     const pragmaIndex = data.indexOf('PRAGMA foreign_keys = ON;');
     if (pragmaIndex !== -1) {
-        // delete all content after PRAGMA statement
         data = data.substring(0, pragmaIndex);
 
-        // replace PRAGMA statement with new data
         data = data.replace('PRAGMA foreign_keys = ON;\n', '');
         data += newData;
     }
 
-    // Write the modified db_dump.sql file
     fs.writeFile('db_dump.sql', data, (err) => {
         if (err) {
             console.log(err);
@@ -255,7 +248,7 @@ fs.readFile('db_dump.sql', 'utf8', (err, data) => {
         }
         console.log('db_dump.sql file updated');
     });
-    // Execute the SQL statements in db_dump.sql
+
     db.serialize(() => {
         db.exec(data, (err) => {
             if (err) {
