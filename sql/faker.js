@@ -2,6 +2,11 @@ const { faker } = require('@faker-js/faker/locale/fr');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 
+/**
+ * This function creates a random address in Paris.
+ * @returns {{addressNumber: *, addressLine1: *, addressLine2: *, zipCode: *, city: string, country: string}}
+ */
+
 function createAddress() {
     const addressNumber = faker.address.buildingNumber();
     const addressLine1 = faker.address.street();
@@ -20,6 +25,10 @@ function createAddress() {
     };
 }
 
+/**
+ * This function creates a random person.
+ * @returns {{firstName: *, lastName: *, email: *, password: *, tel: *, addressNumber: *, addressLine1: *, addressLine2: *, zipCode: *, city: string, country: string}}
+ */
 function createPersons() {
     const sex = faker.name.sexType();
     const firstName = faker.name.firstName(sex);
@@ -37,6 +46,7 @@ function createPersons() {
     const zipCode = address.zipCode;
     const city = address.city;
     const country = address.country;
+
     return {
         firstName,
         lastName,
@@ -52,6 +62,10 @@ function createPersons() {
     };
 }
 
+/**
+ * This function creates a random order.
+ * @returns {{orderNumber: *, status: *, created_at: *, updated_at: *, totalAmount: *, deliverer_id: *, customer_id: *, addressNumber: *, addressLine1: *, addressLine2: *, zipCode: *, city: string, country: string, firstName: *, lastName: *, tel: *}}
+ */
 function createOrder() {
     const orderNumber = faker.finance.account(9);
     const status = faker.helpers.arrayElement(['pending', 'delivered', 'canceled']);
@@ -92,6 +106,10 @@ function createOrder() {
     };
 }
 
+/**
+ * This function creates a random dish.
+ * @returns {{name: *, description: *, price: *, enabled: *, lastEdited: *, chef_id: number}}
+ */
 function createDishes() {
     const name = faker.commerce.productName();
     const description = faker.commerce.productDescription();
@@ -110,6 +128,10 @@ function createDishes() {
     };
 }
 
+/**
+ * This function creates a random order item.
+ * @returns {{quantity: *, unitPrice: *, vat: *, order_id: *, dish_id: *}}
+ */
 function createOrderItems() {
     const quantity = faker.random.numeric(1, { bannedDigits: ['0'] });
     const unitPrice = faker.commerce.price(10, 65);
@@ -126,6 +148,10 @@ function createOrderItems() {
     };
 }
 
+/**
+ * This function creates a random dish stock.
+ * @returns {{quantity: *, dish_id: *, deliverer_id: *}}
+ */
 function createDishStocks() {
     const quantity = parseInt(faker.random.numeric(1, { bannedDigits: ['0'] }));
     const dish_id = parseInt(faker.datatype.number({ min: 1, max: 10 }));
@@ -138,64 +164,62 @@ function createDishStocks() {
     };
 }
 
-const users = [];
-const employees = [];
-const dishes = [];
-const dishStocks = [];
-const orders = [];
-const orderItems = [];
+/**
+ * This function contains a loop to create a number of items.
+ * @param {*} count 
+ * @param {*} creator 
+ * @returns 
+ */
+const createItems = (count, creator) => {
+    const items = [];
+    for (let i = 0; i < count; i++) {
+        items.push(creator());
+    }
+    return items;
+};
 
-// Create 25 users
-for (var i = 0; i < 25; i++) {
-    // create persons and add to users array
-    const user = createPersons();
-    // convert string values to numbers if needed
-    users.push(user);
-}
-
-// Create 6 employees
-for (var i = 0; i < 6; i++) {
+/**
+ * Create the data.
+ */
+const users = createItems(25, createPersons);
+const employees = createItems(6, (count) => {
     const employee = createPersons();
     employee.status = faker.helpers.arrayElement(['delivering', 'available', 'unavailable']);
-    employee.role = (i === 0) ? 'chef' : 'deliverer';
-    employees.push(employee);
-}
-
-// Create 10 dishes
-for (var i = 0; i < 10; i++) {
-    const dish = createDishes();
-    dishes.push(dish);
-}
-
-// create 20 dish stocks
-for (var i = 0; i < 30; i++) {
-    const dishStock = createDishStocks();
-    dishStocks.push(dishStock);
-}
-
-// Create 35 orders
-for (var i = 0; i < 35; i++) {
+    switch (count) {
+        case 0:
+            employee.role = 'chef';
+            break;
+        default:
+            employee.role = 'deliverer';
+    }
+    return employee;
+});
+const dishes = createItems(10, createDishes);
+const dishStocks = createItems(30, createDishStocks);
+const orders = createItems(35, () => {
     const order = createOrder();
-    order.deliverer_id = faker.helpers.arrayElement([2, 3, 4, 5]);
+    order.deliverer_id = parseInt(faker.datatype.number({ min: 2, max: 5 }));
     order.customer_id = parseInt(faker.datatype.number({ min: 1, max: 25 }));
-    orders.push(order);
-}
+    return order;
+});
+const orderItems = createItems(55, createOrderItems);
 
-// Create 55 order item
-for (var i = 0; i < 55; i++) {
-    const orderItem = createOrderItems();
-    orderItems.push(orderItem);
-}
-
+/**
+ * Create the table data.
+ */
 const tableData = [
-    { data: users, table: 'user' },
-    { data: employees, table: 'employee' },
-    { data: dishes, table: 'dish' },
-    { data: dishStocks, table: 'dish_stock' },
-    { data: orders, table: 'customer_order' },
-    { data: orderItems, table: 'order_item' },
+    { table: 'user', data: users },
+    { table: 'employee', data: employees },
+    { table: 'dish', data: dishes },
+    { table: 'dish_stock', data: dishStocks },
+    { table: 'customer_order', data: orders },
+    { table: 'order_item', data: orderItems },
 ];
 
+/**
+ * Create the SQL statements.
+ * 
+ */
 const sqlStatements = {};
 tableData.forEach(({ data, table }) => {
     data.forEach((dataItem) => {
@@ -219,12 +243,19 @@ tableData.forEach(({ data, table }) => {
     });
 });
 
+/**
+ * Create the SQL dump.
+ * 
+ */
 const insertStatements = Object.entries(sqlStatements).map(([table, values]) => {
     const columns = values.columns.join(', ');
     const rows = values.values.join(',\n    ');
     return `INSERT INTO ${table} (${columns}) VALUES\n    ${rows};`;
 });
 
+/**
+ * Write the SQL dump to a file.
+ */
 const db = new sqlite3.Database('database.db');
 const newData = `PRAGMA foreign_keys = ON;\n${insertStatements.join('\n')}`;
 fs.readFile('db_dump.sql', 'utf8', (err, data) => {
