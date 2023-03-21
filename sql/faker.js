@@ -67,14 +67,14 @@ function createPersons() {
  * @returns {{orderNumber: *, status: *, created_at: *, updated_at: *, totalAmount: *, deliverer_id: *, customer_id: *, addressNumber: *, addressLine1: *, addressLine2: *, zipCode: *, city: string, country: string, firstName: *, lastName: *, tel: *}}
  */
 function createOrder() {
-    const orderNumber = faker.finance.account(9);
-    const status = faker.helpers.arrayElement(['pending', 'delivered', 'canceled']);
-    const created_at = faker.date.between('2023-03-01T00:00:00.000Z', '2023-03-16T00:00:00.000Z');
-    const updated_at = faker.date.between(created_at, new Date(created_at.getTime() + 3600000));
+    // status 1 = pending, 2 = delivered, 3 = in delivery, 4 = cancelled, 5 = refused
+    const status = faker.helpers.arrayElement(['1', '2', '3', '4', '5']);
+    const created_at_faker = faker.date.between('2023-03-01T00:00:00.000Z', '2023-03-16T00:00:00.000Z');
+    const updated_at_faker = faker.date.between(created_at_faker, new Date(created_at_faker.getTime() + 3600000));
+    const created_at = created_at_faker.toISOString().slice(0, 19).replace('T', ' ');
+    const updated_at = updated_at_faker.toISOString().slice(0, 19).replace('T', ' ');
     const totalAmount = faker.commerce.price(10, 65);
-    const deliverer_id = faker.datatype.number({ min: 1, max: 6 });
     const isUser = faker.datatype.boolean();
-    const customer_id = isUser ? faker.datatype.number({ min: 1, max: 25 }) : null;
     const address = createAddress();
     const addressNumber = address.addressNumber;
     const addressLine1 = address.addressLine1;
@@ -85,14 +85,14 @@ function createOrder() {
     const firstName = isUser ? null : faker.name.firstName();
     const lastName = isUser ? null : faker.name.lastName();
     const tel = isUser ? null : faker.phone.number('06########');
+    const deliverer_id = faker.datatype.number({ min: 1, max: 6 });
+    const customer_id = isUser ? faker.datatype.number({ min: 1, max: 25 }) : null;
 
     return {
         orderNumber,
         status,
         created_at,
         updated_at,
-        deliverer_id,
-        customer_id,
         totalAmount,
         addressNumber,
         addressLine1,
@@ -102,7 +102,9 @@ function createOrder() {
         country,
         firstName,
         lastName,
-        tel
+        tel,
+        deliverer_id,
+        customer_id,
     };
 }
 
@@ -113,10 +115,11 @@ function createOrder() {
 function createDishes() {
     const name = faker.commerce.productName();
     const description = faker.commerce.productDescription();
-    const price = faker.commerce.price(10, 65);
+    const price = faker.commerce.price(10, 65, 2);
     const enabled = faker.datatype.boolean();
-    const lastEdited = faker.date.between('2023-03-01T00:00:00.000Z', '2023-03-16T00:00:00.000Z');
+    const lastEdited = new Date(faker.date.between('2023-03-01T00:00:00.000Z', '2023-03-16T00:00:00.000Z'));
     const chef_id = 1;
+    const vat = faker.helpers.arrayElement(['5.5', '8.8', '20']);
 
     return {
         name,
@@ -125,6 +128,7 @@ function createDishes() {
         enabled,
         lastEdited,
         chef_id,
+        vat,
     };
 }
 
@@ -134,7 +138,7 @@ function createDishes() {
  */
 function createOrderItems() {
     const quantity = faker.random.numeric(1, { bannedDigits: ['0'] });
-    const unitPrice = faker.commerce.price(10, 65);
+    const unitPrice = faker.commerce.price(10, 65, 2);
     const vat = faker.helpers.arrayElement(['5.5', '8.8', '20']);
     const order_id = faker.datatype.number({ min: 1, max: 35 });
     const dish_id = faker.datatype.number({ min: 1, max: 10 });
@@ -184,22 +188,35 @@ const createItems = (count, creator) => {
 const users = createItems(25, createPersons);
 const employees = createItems(6, (count) => {
     const employee = createPersons();
-    employee.status = faker.helpers.arrayElement(['delivering', 'available', 'unavailable']);
+    const removeFields = ['addressNumber', 'addressLine1', 'addressLine2', 'zipCode', 'city', 'country'];
+    for (const field of removeFields) {
+        if (employee.hasOwnProperty(field)) {
+            delete employee[field];
+        }
+    }
     switch (count) {
         case 0:
             employee.role = 'chef';
             break;
         default:
+            // Status 1 = available, 2 = unavailable, 3 = delivering
+            employee.status = faker.helpers.arrayElement(['1', '2', '3']);
             employee.role = 'deliverer';
     }
     return employee;
 });
+const orderNumber = parseInt(faker.finance.account(9));
+const orderNumberDigits = orderNumber.toString().length;
 const dishes = createItems(10, createDishes);
 const dishStocks = createItems(30, createDishStocks);
+let orderIndex = 1;
 const orders = createItems(35, () => {
     const order = createOrder();
     order.deliverer_id = parseInt(faker.datatype.number({ min: 2, max: 5 }));
     order.customer_id = parseInt(faker.datatype.number({ min: 1, max: 25 }));
+    const newOrderNumber = orderNumber + orderIndex;
+    order.orderNumber = newOrderNumber.toString().padStart(orderNumberDigits, '0');
+    orderIndex++;
     return order;
 });
 const orderItems = createItems(55, createOrderItems);
