@@ -45,23 +45,23 @@ Projet 4 UML Express Food
 ---
 > ### Class Diagram
 ---
-![diagram](./svg/classes.svg)
+![class_diagram](./svg/classes.svg)
 ---
 ## Sequences Diagrams
 ---
-> ### orderCreation Sequence Diagram
 ---
-![diagram](./svg/sequences/Seq_1_Order_Creation.svg)
-
+> ### Sequence 1 - Dish Management Sequence Diagram
 ---
-> ## dishManagement Sequence Diagram
+![sequence_1_dish_management_diagram](./svg/sequences/Seq_1_Dish_Management.svg)
 ---
-![diagram](./svg/sequences/Seq_2_Dish_Management.svg)
+> ### Sequence 2 - Stock Management Sequence Diagram
 ---
-> ### orderDelivery Sequence Diagram
+![sequence_2_stock_management_diagram](./svg/sequences/Seq_2_Stock_Management.svg)
 ---
-![diagram](./svg/sequences/Seq_3_Order_Delivery.svg)
+> ### Sequence 3 - Order Creation Sequence Diagram
 ---
-> ## stockManagement Sequence Diagram
+![sequence_3_order_creation_diagram](./svg/sequences/Seq_3_Order_Creation.svg)
 ---
-![diagram](./svg/sequences/Seq_4_Stock_Management.svg)
+> ### Sequence 4 - Order Delivery Sequence Diagram
+---
+![sequence_4_order_delivery_diagram](./svg/sequences/Seq_4_Order_Delivery.svg)
