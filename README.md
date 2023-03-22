@@ -47,6 +47,10 @@ Projet 4 UML Express Food
 ---
 ![class_diagram](./svg/classes.svg)
 ---
+> ### DataModel Diagram
+---
+![datamodel_diagram](./svg/datamodel.svg)
+---
 ## Sequences Diagrams
 ---
 ---
