@@ -27,17 +27,21 @@ Projet 4 UML Express Food
 # Diagrams
 ## Use Case Diagrams
 ---
-> ### Use Case 1 - Order Creation
+> ### Use Case 1 - Dish Management
 ---
-![use_case_1_order_creation](./png/usecases/Use_Case_1_Order_Creation.png)
+![use_case_1_dish_management](./png/usecases/Use_Case_1_Dish_Management.png)
 ---
-> ### Use Case 2 - Dish Management
+> ### Use Case 2 - Stock Management
 ---
-![use_case_2_dish_management](./png/usecases/Use_Case_2_Dish_Management.png)
+![use_case_2_stock_management](./png/usecases/Use_Case_2_Stock_Management.png)
 ---
-> ### Use Case 3 - Order Delivery
+> ### Use Case 3 - Order Creation
 ---
-![use_case_3_order_delivery_diagram](./png/usecases/Use_Case_3_Order_Delivery.png)
+![use_case_3_order_creation](./png/usecases/Use_Case_3_Order_Creation.png)
+---
+> ### Use Case 4 - Order Delivery
+---
+![use_case_4_order_delivery_diagram](./png/usecases/Use_Case_4_Order_Delivery.png)
 ---
 > ### Class Diagram
 ---
